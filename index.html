@@ -16,7 +16,7 @@
 
 <body class="text-light">
     <div id="app">
-        <div class="container-lg text-bg-light rounded-0 mt-4 shadow">
+        <div class="container-md text-bg-light rounded-0 shadow">
             <div class="p-4">
                 <div class="display-4 fw-bold text-center">
                     <span class="user-select-none">{{ chord }}</span>
@@ -53,8 +53,8 @@
                             @click="selectChordIntervals(extra.name)">{{ extra.name }}</button>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-3" v-for="chordType in compatibleChordTypes">
+                <div class="row mt-2">
+                    <div class="col-6 col-sm-3 my-2" v-for="chordType in compatibleChordTypes">
                         <button class="btn btn-light btn-block w-100 shadow p-3 rounded-5" :key="chordType.name"
                             :class="{ active: selectedChordType === chordType.name }"
                             @click="selectChordType(chordType.name)">{{ chordType.name }}</button>
