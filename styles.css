@@ -4,10 +4,6 @@ body {
 }
 
 .note-button {
-    
-}
-
-.note-button {
     transition: 100ms;
     background-color: var(--button-bg-color) !important;
     transition: background-color 0.2s;

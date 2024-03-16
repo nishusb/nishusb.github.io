@@ -183,7 +183,7 @@ createApp({
         },
         getColorForIndex(index) {
             const hue = (index / this.notes.length) * 360;
-            const color = `hsl(${hue}, 30%, 20%)`;
+            const color = `hsl(${hue}, 20%, 30%)`;
             console.log(color); 
             return color;
         },
