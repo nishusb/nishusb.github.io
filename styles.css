@@ -2,3 +2,17 @@ body {
     background-color: #686561;
     font-family: Roboto Mono, Arial, Helvetica, sans-serif;
 }
+
+.note-button {
+    
+}
+
+.note-button {
+    transition: 100ms;
+    background-color: var(--button-bg-color) !important;
+    transition: background-color 0.2s;
+}
+
+.note-button.active, .note-button:hover {
+    background-color: var(--button-hover-bg-color) !important;
+}

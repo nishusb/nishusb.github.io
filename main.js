@@ -180,6 +180,18 @@ createApp({
             }
 
             this.updateInfo();
+        },
+        getColorForIndex(index) {
+            const hue = (index / this.notes.length) * 360;
+            const color = `hsl(${hue}, 30%, 20%)`;
+            console.log(color); 
+            return color;
+        },
+        getHoverColorForIndex(index) {
+            const hue = (index / this.notes.length) * 360;
+            const color = `hsl(${hue}, 60%, 50%)`;
+            console.log(color); 
+            return color;
         }
     },
     computed: {
