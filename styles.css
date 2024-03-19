@@ -1,5 +1,5 @@
 body {
-    background-color: #686561;
+    background-color: #9083a7;
     font-family: Roboto Mono, Arial, Helvetica, sans-serif;
 }
 
@@ -9,6 +9,18 @@ body {
     transition: background-color 0.2s;
 }
 
-.note-button.active, .note-button:hover {
+.note-button.active,
+.note-button:hover {
     background-color: var(--button-hover-bg-color) !important;
 }
+
+.btn-light.pe-none:hover {
+    background-color: var(--bs-light);
+    color: var(--bs-body-color);
+    cursor: pointer;
+}
+
+/* .btn-dark.pe-none:hover {
+    background-color: var(--bs-dark);
+    color: var(--bs-white);
+  } */

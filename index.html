@@ -15,26 +15,24 @@
 </head>
 
 <body class="text-light">
-    <div id="app">
-        <div class="container-md text-bg-light rounded-0 shadow">
-            <div class="p-4">
-                <div class="display-4 fw-bold text-center">
-                    <span class="user-select-none">{{ chord }}</span>
+    <div id="app" v-cloak>
+        <div class="container-md text-bg-light text-center rounded-0">
+            <div class="py-4">
+                <div class="row justify-content-center gx-4">
+                    <div class="col-auto user-select-none" v-for="note in displayIntervals">
+                        <div class="p-2 px-4 fs-1 fw-bold rounded-pill text-bg-dark">
+                            {{ note.getFullName() }}
+                        </div>
+                        <div class="fs-4">{{ note.interval }}</div>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="row text-center fs-5 border-top border-bottom border-5 text-light">
-                <div class="col bg-secondary p-3">
-                    scale
-                </div>
-                <div class="col p-3 bg-black h-100">
-                    {{ scale }}
-                </div>
-            </div> -->
             <div class="row">
                 <div class="col p-0" v-for="(note, index) in notes">
                     <button class="note-button btn btn-dark btn-block w-100 p-3 fs-2 border-0 rounded-0"
                         :class="{active: selectedNote === note}" @click="selectNote(note)"
-                        :style="{ '--button-bg-color': getColorForIndex(index), '--button-hover-bg-color': getHoverColorForIndex(index) }" :key="note">{{ note
+                        :style="{ '--button-bg-color': getColorForIndex(index), '--button-hover-bg-color': getHoverColorForIndex(index) }"
+                        :key="note">{{ note
                         }}</button>
                 </div>
             </div>
@@ -45,7 +43,7 @@
                         @click="selectAccidental(accidental.mod)">{{ accidental.name }}</button>
                 </div>
             </div>
-            <div class="p-4">
+            <div class="p-4" v-if="selectedMode === 'chords'">
                 <div class="row">
                     <div class="col" v-for="extra in extraNotes">
                         <button class="btn btn-light btn-block w-100 shadow p-2 rounded-5 fs-2" :key="extra"
@@ -55,11 +53,24 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-6 col-sm-3 my-2" v-for="chordType in compatibleChordTypes">
-                        <button class="btn btn-light btn-block w-100 shadow p-3 rounded-5" :key="chordType.name"
+                            <button class="btn btn-light btn-block w-100 shadow p-3 rounded-5" :key="chordType.name"
                             :class="{ active: selectedChordType === chordType.name }"
                             @click="selectChordType(chordType.name)">{{ chordType.name }}</button>
                     </div>
                 </div>
+            </div>
+            <div class="p-4" v-if="selectedMode === 'scales'">
+                more options coming soon
+            </div>
+        </div>
+        <div class="container-md">
+            <div class="row text-center width-0">
+                <button class="btn col-auto fs-3 rounded-0 rounded-bottom-4 border-0" v-for="mode in modes" :class="[
+                mode === selectedMode ? 'btn-light' : 'btn-dark',
+                mode === selectedMode ? 'pe-none' : ''
+              ]" @click="selectedMode = mode" :key="mode">
+                    {{ mode }}
+                </button>
             </div>
         </div>
 
