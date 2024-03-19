@@ -43,7 +43,7 @@
                         @click="selectAccidental(accidental.mod)">{{ accidental.name }}</button>
                 </div>
             </div>
-            <div class="p-4" v-if="selectedMode === 'chords'">
+            <div class="p-5" v-if="selectedMode === 'chords'">
                 <div class="row">
                     <div class="col" v-for="extra in extraNotes">
                         <button class="btn btn-light btn-block w-100 shadow p-2 rounded-5 fs-2" :key="extra"
@@ -59,8 +59,8 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 row justify-content-center" v-if="selectedMode === 'scales'">
-                <div class="gy-2 col-auto" v-for="mode in musicalModes">
+            <div class="p-5 row justify-content-center" v-if="selectedMode === 'scales'">
+                <div class="g-2 col-auto" v-for="mode in musicalModes">
                     <button class="btn btn-light borde p-3 shadow rounded-pill"
                         :class="{ active: mode === selectedMusicalMode }" @click="selectedMusicalMode = mode"
                         v-text="mode"></button>
