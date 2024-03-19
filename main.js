@@ -156,7 +156,7 @@ createApp({
             selectedAccidental: 0,
             selectedNote: "C",
             selectedChordType: 'major',
-            selectedMode: 'scales',
+            selectedMode: 'chords',
         }
     },
     methods: {
