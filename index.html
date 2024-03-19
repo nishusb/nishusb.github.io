@@ -18,9 +18,9 @@
     <div id="app" v-cloak>
         <div class="container-md text-bg-light text-center rounded-0">
             <div class="py-4">
-                <div class="row justify-content-center gx-4">
+                <div class="row justify-content-center gx-2">
                     <div class="col-auto user-select-none" v-for="note in displayIntervals">
-                        <div class="p-2 px-4 fs-1 fw-bold rounded-pill text-bg-dark">
+                        <div class="p-1 px-3 fs-1 fw-bold rounded-pill text-bg-dark">
                             {{ note.getFullName() }}
                         </div>
                         <div class="fs-4">{{ note.interval }}</div>
@@ -51,16 +51,18 @@
                             @click="selectChordIntervals(extra.name)">{{ extra.name }}</button>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-6 col-sm-3 my-2" v-for="chordType in compatibleChordTypes">
+                <div class="row mt-2 gy-4">
+                    <div class="col-6 col-sm-3" v-for="chordType in compatibleChordTypes">
                             <button class="btn btn-light btn-block w-100 shadow p-3 rounded-5" :key="chordType.name"
                             :class="{ active: selectedChordType === chordType.name }"
                             @click="selectChordType(chordType.name)">{{ chordType.name }}</button>
                     </div>
                 </div>
             </div>
-            <div class="p-4" v-if="selectedMode === 'scales'">
-                more options coming soon
+            <div class="p-4 row justify-content-center" v-if="selectedMode === 'scales'">
+                <div class="gy-2 col-auto" v-for="mode in musicalModes">
+                    <button class="btn btn-light borde p-3 shadow rounded-pill" :class="{ active: mode === selectedMusicalMode }" @click="selectedMusicalMode = mode" v-text="mode"></button>
+                </div>
             </div>
         </div>
         <div class="container-md">

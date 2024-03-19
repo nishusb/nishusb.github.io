@@ -4,7 +4,13 @@ const notes = ["C", "D", "E", "F", "G", "A", "B"];
 
 const scales = {
     major: [2, 2, 1, 2, 2, 2, 1],
+    dorian: [2, 1, 2, 2, 2, 1, 2],
+    phrygian: [1, 2, 2, 2, 1, 2, 2],
+    lydian: [2, 2, 2, 1, 2, 2, 1],
+    mixolydian: [2, 2, 1, 2, 2, 1, 2],
+    aeolian: [2, 1, 2, 2, 1, 2, 2],
     minor: [2, 1, 2, 2, 1, 2, 2],
+    locrian: [1, 2, 2, 1, 2, 2, 2],
 }
 
 const chordTypes = [
@@ -94,18 +100,20 @@ class Note {
     }
 }
 
-function generateScaleFromNote(note) {
+function generateScaleFromNote(note, musicalMode = 'major') {
     const startIndex = notes.indexOf(note.name);
     const totalNotes = notes.length;
     const scale = [];
 
     scale.push(note.setInterval(1));
 
+    let scaleToUse = scales[musicalMode];
+
     for (let i = 1; i < totalNotes; i++) {
         let currentNote = new Note(notes[(startIndex + i) % totalNotes]).setInterval(i + 1);
 
         if (scale.length > 0) {
-            let expectedJump = scales.major[(totalNotes + i - 1) % totalNotes];
+            let expectedJump = scaleToUse[(totalNotes + i - 1) % totalNotes];
             let pureJump = scales.major[(totalNotes + i + startIndex - 1) % totalNotes] - scale[i - 1].mod;
 
             currentNote.modify(expectedJump - pureJump);
@@ -142,27 +150,25 @@ createApp({
             ],
             displayedIntervals: [],
             modes: ['chords', 'scales'],
-            musicalModes: ['aeolian', 'dorian', 'phrygian', 'lydian'],
+            musicalModes: ['major', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'minor', 'locrian'],
+            selectedMusicalMode: 'major',
             selectedExtraNotes: '3',
             selectedAccidental: 0,
             selectedNote: "C",
             selectedChordType: 'major',
-            selectedMode: 'chords',
+            selectedMode: 'scales',
         }
     },
     methods: {
         selectNote(note) {
             this.selectedNote = note;
             this.selectedAccidental = 0;
-            // this.updateInfo();
         },
         selectAccidental(accidental) {
             this.selectedAccidental = accidental;
-            // this.updateInfo();
         },
         selectChordType(chordType) {
             this.selectedChordType = chordType;
-            // this.updateInfo();
         },
         selectChordIntervals(intervals) {
             this.selectedExtraNotes = intervals;
@@ -172,8 +178,6 @@ createApp({
             if (selectedChordType.compatibleIntervals && !selectedChordType.compatibleIntervals.includes(intervals)) {
                 this.selectedChordType = 'major';
             }
-
-            // this.updateInfo();
         },
         getColorForIndex(index) {
             const hue = (index / this.notes.length) * 360;
@@ -191,32 +195,11 @@ createApp({
             return this.chordTypes.filter(chordType => chordType.compatibleIntervals === undefined || chordType.compatibleIntervals.includes(this.selectedExtraNotes));
         },
         scale() {
-            const scale = generateScaleFromNote(new Note(this.selectedNote).modifier(this.selectedAccidental));
+            const scale = generateScaleFromNote(new Note(this.selectedNote).modifier(this.selectedAccidental), this.selectedMode === 'scales' ? this.selectedMusicalMode : undefined);
             return scale;
         },
-        // chord() {
-        //     const chordIntervals = this.extraNotes.find((extra) => (extra.name === this.selectedExtraNotes))?.intervals;
-        //     const chordType = chordTypes.find((chordType) => chordType.name === this.selectedChordType);
-        //     const chordNotes = chordIntervals.map((interval) => {
-        //         let change = chordType.changes.find((change) => (change.interval === interval))?.mod;
-        //         return this.scale[(interval - 1 + 7) % 7].modify(change ?? 0);
-        //     });
-        //     return chordNotes.map(note => ` ${note.getFullName()}`).join('');
-        // },
         displayIntervals() {
-            // if (this.selectedMode === 'scales') {
-            //     return this.scale;
-            // }
-            // const chordIntervals = this.extraNotes.find((extra) => (extra.name === this.selectedExtraNotes))?.intervals;
-            // const chordType = chordTypes.find((chordType) => chordType.name === this.selectedChordType);
-            // const chordNotes = chordIntervals.map((interval) => {
-            //     let change = chordType.changes.find((change) => (change.interval === interval))?.mod;
-            //     return this.scale[(interval - 1 + 7) % 7].modify(change ?? 0);
-            // });
-            // return chordNotes;
-
-            //new:
-            let scaleCopy = this.scale.map(note => new Note(note.name).modify(note.mod).setInterval(note.interval)); // Create a copy of the scale
+            let scaleCopy = this.scale.map(note => new Note(note.name).modify(note.mod).setInterval(note.interval));
 
             if (this.selectedMode === 'scales') {
                 return scaleCopy;
