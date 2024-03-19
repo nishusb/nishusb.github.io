@@ -59,12 +59,13 @@
                     </div>
                 </div>
             </div>
-            <div class="p-5 row justify-content-center" v-if="selectedMode === 'scales'">
-                <div class="g-2 col-auto" v-for="mode in musicalModes">
-                    <button class="btn btn-light borde p-3 shadow rounded-pill"
-                        :class="{ active: mode === selectedMusicalMode }" @click="selectedMusicalMode = mode"
-                        v-text="mode"></button>
+            <div v-if="selectedMode === 'scales'">
+                <div class="row justify-content-center">
+                    <button class="col btn btn-light btn-block w-100 p-3 rounded-0 border-0"
+                        v-for="mode in musicalModes" :class="{ active: mode === selectedMusicalMode }"
+                        @click="selectedMusicalMode = mode" v-text="mode"></button>
                 </div>
+                <!-- <div class="p-4">TODO: add roman numeral chords</div> -->
             </div>
         </div>
         <div class="container-md">

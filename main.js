@@ -150,13 +150,13 @@ createApp({
             ],
             displayedIntervals: [],
             modes: ['chords', 'scales'],
-            musicalModes: ['major', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'minor', 'locrian'],
+            musicalModes: ['major', 'minor', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'locrian'],
             selectedMusicalMode: 'major',
             selectedExtraNotes: '3',
             selectedAccidental: 0,
             selectedNote: "C",
             selectedChordType: 'major',
-            selectedMode: 'chords',
+            selectedMode: 'scales',
         }
     },
     methods: {
