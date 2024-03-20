@@ -1,6 +1,7 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 const notes = ["C", "D", "E", "F", "G", "A", "B"];
+const romanNumerals = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 
 const scales = {
     major: [2, 2, 1, 2, 2, 2, 1],
@@ -131,6 +132,7 @@ createApp({
         return {
             notes,
             chordTypes,
+            romanNumerals,
             accidentals: [
                 {
                     name: "flat",
@@ -156,7 +158,8 @@ createApp({
             selectedAccidental: 0,
             selectedNote: "C",
             selectedChordType: 'major',
-            selectedMode: 'chords',
+            selectedMode: 'scales',
+            selectedRomanNumeral: 'i',
         }
     },
     methods: {

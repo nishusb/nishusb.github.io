@@ -14,66 +14,89 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 
-<body class="text-light">
-    <div id="app" class="vh-100">
-        <div class="container-md text-bg-light text-center rounded-0">
-            <div class="py-4">
+<body>
+    <div id="app" class="user-select-none">
+        <div class="container-fluid container-md text-bg-light text-center rounded-0 px-3 px-md-5">
+            <div class="py-2 py-md-4">
                 <div class="row justify-content-center gx-2">
-                    <div class="col-auto user-select-none" v-for="note in displayIntervals">
+                    <div class="col-auto" v-for="note in displayIntervals">
                         <div class="p-1 px-3 fs-1 fw-bold rounded-pill text-bg-dark">
                             {{ note.getFullName() }}
                         </div>
                         <div class="fs-4">{{ note.interval }}</div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col p-0" v-for="(note, index) in notes">
-                    <button class="note-button btn btn-dark btn-block w-100 p-3 fs-2 border-0 rounded-0"
-                        :class="{active: selectedNote === note}" @click="selectNote(note)"
-                        :style="{ '--button-bg-color': getColorForIndex(index), '--button-hover-bg-color': getHoverColorForIndex(index) }"
-                        :key="note">{{ note
-                        }}</button>
+                <div class="fw-bold fs-3" v-if="selectedMode === 'scales'">
+                    {{ displayIntervals[0].getFullName() }} {{ selectedMusicalMode }}
                 </div>
+
             </div>
-            <div class="row">
-                <div class="col p-0" v-for="accidental in accidentals">
-                    <button class="btn btn-secondary btn-block w-100 border-0 rounded-0 p-3" :key="accidental.mod"
-                        :class="{ active: selectedAccidental === accidental.mod }"
-                        @click="selectAccidental(accidental.mod)">{{ accidental.name }}</button>
-                </div>
-            </div>
-            <div class="p-5" v-if="selectedMode === 'chords'">
-                <div class="row">
-                    <div class="col" v-for="extra in extraNotes">
-                        <button class="btn btn-light btn-block w-100 shadow p-2 rounded-5 fs-2" :key="extra"
-                            :class="{ active: selectedExtraNotes === extra.name }"
-                            @click="selectChordIntervals(extra.name)">{{ extra.name }}</button>
+            <div class="rounded-4 bg-dark overflow-hidden">
+                <div class="row g-0">
+                    <div class="col p-0" v-for="(note, index) in notes">
+                        <button class="note-button btn btn-dark btn-block p-3 fs-2 border-0 rounded-0 w-100"
+                            :class="{active: selectedNote === note}" @click="selectNote(note)"
+                            :style="{ '--button-bg-color': getColorForIndex(index), '--button-hover-bg-color': getHoverColorForIndex(index) }"
+                            :key="note">{{ note
+                            }}</button>
                     </div>
                 </div>
-                <div class="row mt-2 gy-4">
-                    <div class="col-6 col-sm-3" v-for="chordType in compatibleChordTypes">
-                        <button class="btn btn-light btn-block w-100 shadow p-3 rounded-5" :key="chordType.name"
-                            :class="{ active: selectedChordType === chordType.name }"
-                            @click="selectChordType(chordType.name)">{{ chordType.name }}</button>
+                <div class="row g-0">
+                    <div class="col p-0" v-for="accidental in accidentals">
+                        <button class="btn btn-secondary btn-block w-100 border-0 rounded-0 p-3" :key="accidental.mod"
+                            :class="{ active: selectedAccidental === accidental.mod }"
+                            @click="selectAccidental(accidental.mod)">{{ accidental.name }}</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="row g-0" v-if="selectedMode === 'chords'">
+                        <div class="col p-0" v-for="extra in extraNotes">
+                            <button class="btn btn-dark btn-block w-100 p-2 rounded-0 fs-2 border-0" :key="extra"
+                                :class="{ active: selectedExtraNotes === extra.name }"
+                                @click="selectChordIntervals(extra.name)">{{ extra.name }}</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row g-0 bg-dark"  v-if="selectedMode === 'scales'">
+                    <div class="col-lg col-3 p-0" v-for="mode in musicalModes">
+                        <button class="btn btn-dark btn-block w-100 p-3 rounded-0 border-0"
+                            :class="{ active: mode === selectedMusicalMode }" @click="selectedMusicalMode = mode"
+                            v-text="mode"></button>
                     </div>
                 </div>
             </div>
-            <div v-if="selectedMode === 'scales'">
-                <div class="row justify-content-center">
-                    <button class="col btn btn-light btn-block w-100 p-3 rounded-0 border-0"
-                        v-for="mode in musicalModes" :class="{ active: mode === selectedMusicalMode }"
-                        @click="selectedMusicalMode = mode" v-text="mode"></button>
+
+            <div v-if="selectedMode === 'chords'">
+                <div class="py-3 py-md-4">
+                    <div class="row g-0">
+                        <div class="col-6 col-sm-3 p-0" v-for="chordType in compatibleChordTypes">
+                            <button class="btn btn-light btn-block w-100 p-3 rounded-0 border-0" :key="chordType.name"
+                                :class="{ active: selectedChordType === chordType.name }"
+                                @click="selectChordType(chordType.name)">{{ chordType.name }}</button>
+                        </div>
+                    </div>
                 </div>
-                <!-- <div class="p-4">TODO: add roman numeral chords</div> -->
             </div>
+            
+            <div v-if="selectedMode === 'scales'" class="pb-3 pb-md-5"></div>
+            <!-- <div v-if="selectedMode === 'scales'">
+                <div class="py-4">
+                    <div class="row g-0">
+                        <div class="col" v-for="numeral in romanNumerals">
+                            <button class="btn btn-light btn-block w-100 p-3 rounded-0 border-0" :class="{ active: selectedRomanNumeral === numeral }"
+                            @click="selectedRomanNumeral = numeral">
+                            {{ numeral }}
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
-        <div class="container-md">
-            <div class="row text-center width-0">
+        <div class="container-fluid container-md">
+            <div class="row text-center width-0 s">
                 <button class="btn col-auto fs-3 rounded-0 rounded-bottom-4 border-0" v-for="mode in modes" :class="[
-                mode === selectedMode ? 'btn-light' : 'btn-dark',
-                mode === selectedMode ? 'pe-none' : ''
-              ]" @click="selectedMode = mode" :key="mode">
+                mode === selectedMode ? 'btn-light pe-none' : 'btn-dark' ]" @click="selectedMode = mode" :key="mode">
                     {{ mode }}
                 </button>
             </div>
