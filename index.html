@@ -43,7 +43,7 @@
                 </div>
                 <div class="row g-0">
                     <div class="col p-0" v-for="accidental in accidentals">
-                        <button class="btn btn-secondary btn-block w-100 border-0 rounded-0 p-3" :key="accidental.mod"
+                        <button class="fs-5 btn btn-secondary btn-block w-100 border-0 rounded-0 p-3" :key="accidental.mod"
                             :class="{ active: selectedAccidental === accidental.mod }"
                             @click="selectAccidental(accidental.mod)">{{ accidental.name }}</button>
                     </div>
@@ -51,7 +51,7 @@
                 <div>
                     <div class="row g-0" v-if="selectedMode === 'chords'">
                         <div class="col p-0" v-for="extra in extraNotes">
-                            <button class="btn btn-dark btn-block w-100 p-2 rounded-0 fs-2 border-0" :key="extra"
+                            <button class="btn btn-dark btn-block w-100 p-2 rounded-0 fs-5 border-0 p-3" :key="extra"
                                 :class="{ active: selectedExtraNotes === extra.name }"
                                 @click="selectChordIntervals(extra.name)">{{ extra.name }}</button>
                         </div>
